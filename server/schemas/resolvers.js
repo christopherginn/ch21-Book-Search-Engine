@@ -7,9 +7,7 @@ const resolvers = {
        me: async (parent, args, context) => {
         if (context.user) {
             const meData = 
-                await User.findOne({ _id: context.user._id })
-                .select('-__v -password')
-                // .populate('books')
+                await User.findOne({ _id: context.user._id }).populate('savedBooks')
             return meData;
         }
         throw new AuthenticationError('You are not logged in!');
@@ -65,3 +63,5 @@ const resolvers = {
 
     }
 };
+
+module.exports = resolvers;
