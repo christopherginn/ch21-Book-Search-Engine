@@ -39,7 +39,15 @@ const resolvers = {
         },
 
         saveBook: async (parent, { input }, context) => {
-
+            if (context.user){
+                const updatedBooks = await User.findByIdAndUpdate(
+                    { _id: context.user._id },
+                    { $push: { savedBooks: input } },
+                    { new: ture }
+                );
+                return updatedBooks
+            }
+            throw new AuthenticationError('You are not logged in!')
         },
 
         removeBook: async (parent, { bookId }, context) => {
