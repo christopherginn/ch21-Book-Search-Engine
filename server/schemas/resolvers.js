@@ -36,12 +36,12 @@ const resolvers = {
             return { token, user }
         },
 
-        saveBook: async (parent, { input }, context) => {
+        saveBook: async (parent, { bookInput }, context) => {
             if (context.user){
                 const updatedBooks = await User.findByIdAndUpdate(
                     { _id: context.user._id },
-                    { $push: { savedBooks: input } },
-                    { new: ture }
+                    { $push: { savedBooks: bookInput } },
+                    { new: true }
                 );
                 return updatedBooks
             }
